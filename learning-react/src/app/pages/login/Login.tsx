@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
@@ -14,9 +14,9 @@ export const Login = () => {
         navigate("/dashboard");
     }
 
-    const handleEntrar = () => {
+    const handleEntrar: () => void = useCallback(() => {
         alert(`Entrando com o email: ${email}`);
-    }
+    }, [email]);
 
     useEffect(() => {
         if (email.length > 0) {
@@ -32,10 +32,11 @@ export const Login = () => {
     }, [email]);
 
     return (
-        // <header>
-        //     <h1>Login Page</h1>
-        //     <button onClick={handleClick}>Dashboard</button>
-        // </header>
+        <>
+        <header>
+            <h1>Login Page</h1>
+            <button onClick={handleClick}>Dashboard</button>
+        </header>
         <form onSubmit={handleEntrar}>
             <p>Email length: {emailLength}</p>
 
@@ -47,5 +48,6 @@ export const Login = () => {
 
             <button type="submit">Login</button>
         </form>
+        </>
     );
 }
