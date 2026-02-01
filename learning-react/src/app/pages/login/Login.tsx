@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
@@ -6,6 +6,9 @@ export const Login = () => {
 
     const [email, setEmail] = useState("");
 
+    const emailLength: number = useMemo(() => {
+        return email.length;
+    }, [email.length]);
 
     const handleClick = () => {
         navigate("/dashboard");
@@ -34,6 +37,8 @@ export const Login = () => {
         //     <button onClick={handleClick}>Dashboard</button>
         // </header>
         <form onSubmit={handleEntrar}>
+            <p>Email length: {emailLength}</p>
+
             <label htmlFor="iemail">Email</label>
             <input type="email" id="iemail" value={email} onChange={e => setEmail(e.target.value)} />
 
