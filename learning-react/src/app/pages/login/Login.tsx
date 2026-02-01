@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
@@ -14,6 +14,19 @@ export const Login = () => {
     const handleEntrar = () => {
         alert(`Entrando com o email: ${email}`);
     }
+
+    useEffect(() => {
+        if (email.length > 0) {
+            setEmail(email.toLocaleLowerCase());
+        }
+
+        return () => {
+            if (email.length > 0) {
+                console.log(email);
+            }
+        }
+
+    }, [email]);
 
     return (
         // <header>
