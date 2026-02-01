@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
+    const inputPasswordRef: React.RefObject<HTMLInputElement | null> = useRef(null);
 
     const emailLength: number = useMemo(() => {
         return email.length;
@@ -33,21 +34,25 @@ export const Login = () => {
 
     return (
         <>
-        <header>
-            <h1>Login Page</h1>
-            <button onClick={handleClick}>Dashboard</button>
-        </header>
-        <form onSubmit={handleEntrar}>
-            <p>Email length: {emailLength}</p>
+            <header>
+                <h1>Login Page</h1>
+                <button onClick={handleClick}>Dashboard</button>
+            </header>
+            <form onSubmit={handleEntrar}>
+                <p>Email length: {emailLength}</p>
 
-            <label htmlFor="iemail">Email</label>
-            <input type="email" id="iemail" value={email} onChange={e => setEmail(e.target.value)} />
+                <label htmlFor="iemail">Email</label>
+                <input type="email" id="iemail"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    onKeyDown={e => e.key === ' ' ? inputPasswordRef.current?.focus() : undefined}
+                />
 
-            <label htmlFor="ipassword">Password</label>
-            <input type="password" id="ipassword" />
+                <label htmlFor="ipassword">Password</label>
+                <input ref={inputPasswordRef} type="password" id="ipassword" />
 
-            <button type="submit">Login</button>
-        </form>
+                <button type="submit">Login</button>
+            </form>
         </>
     );
 }
