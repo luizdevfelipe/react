@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { InputLogin } from "./components/InputLogin";
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -41,15 +42,23 @@ export const Login = () => {
             <form onSubmit={handleEntrar}>
                 <p>Email length: {emailLength}</p>
 
-                <label htmlFor="iemail">Email</label>
-                <input type="email" id="iemail"
+
+                <InputLogin
+                    label="Email"
+                    name="email"
                     value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    onKeyDown={e => e.key === ' ' ? inputPasswordRef.current?.focus() : undefined}
+                    onChange={newValue => setEmail(newValue)}
+                    onPressSpace={() => inputPasswordRef.current?.focus()}
+                    type="email"
                 />
 
-                <label htmlFor="ipassword">Password</label>
-                <input ref={inputPasswordRef} type="password" id="ipassword" />
+                <InputLogin
+                    label="Password"
+                    name="password"
+                    value={undefined}
+                    ref={inputPasswordRef}
+                    type="password"
+                />
 
                 <button type="submit">Login</button>
             </form>
