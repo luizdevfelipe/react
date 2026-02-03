@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useLoggetUser } from '../../shared/hooks';
+import { useLoggedUser } from '../../shared/hooks';
 
 export const Dashboard = () => {
 
-    const { userName } = useLoggetUser();
+    const { userName } = useLoggedUser();
 
     return (
         <header>
