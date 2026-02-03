@@ -6,12 +6,12 @@ interface IInputLoginProps {
     type?: string;
     ref?: React.Ref<HTMLInputElement>;
     onChange?: (newValue: string) => void;
-    onPressSpace?: () => void;
+    onPressEnter?: () => void;
 
 }
 
 export const InputLogin: React.FC<IInputLoginProps> = (props) => {
-    const { label, value, onChange, onPressSpace, name, type } = props;
+    const { label, value, onChange, onPressEnter, name, type } = props;
 
     return (
         <>
@@ -20,7 +20,7 @@ export const InputLogin: React.FC<IInputLoginProps> = (props) => {
                 value={value}
                 ref={props.ref}
                 onChange={e => onChange?.(e.target.value)}
-                onKeyDown={e => e.key === ' ' ? onPressSpace?.() : undefined}
+                onKeyDown={e => e.key === 'Enter' ? onPressEnter?.() : undefined}
             />
         </>
     );

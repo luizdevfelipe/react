@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputLogin } from "./components/InputLogin";
+import { ButtonLogin } from "./components/ButtonLogin";
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -48,7 +49,7 @@ export const Login = () => {
                     name="email"
                     value={email}
                     onChange={newValue => setEmail(newValue)}
-                    onPressSpace={() => inputPasswordRef.current?.focus()}
+                    onPressEnter={() => inputPasswordRef.current?.focus()}
                     type="email"
                 />
 
@@ -60,7 +61,7 @@ export const Login = () => {
                     type="password"
                 />
 
-                <button type="submit">Login</button>
+                <ButtonLogin type="button" onClick={handleEntrar}>Entrar</ButtonLogin>
             </form>
         </>
     );
