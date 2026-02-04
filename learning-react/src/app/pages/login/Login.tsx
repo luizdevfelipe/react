@@ -2,12 +2,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputLogin } from "./components/InputLogin";
 import { ButtonLogin } from "./components/ButtonLogin";
+import { useLoggedUser } from "../../shared/hooks";
 
 export const Login = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const inputPasswordRef: React.RefObject<HTMLInputElement | null> = useRef(null);
+    const { setName } = useLoggedUser();
 
     const emailLength: number = useMemo(() => {
         return email.length;
@@ -18,8 +20,9 @@ export const Login = () => {
     }
 
     const handleEntrar: () => void = useCallback(() => {
-        alert(`Entrando com o email: ${email}`);
-    }, [email]);
+        setName(email);
+        navigate("/dashboard");
+    }, [email, navigate, setName]);
 
     useEffect(() => {
         if (email.length > 0) {

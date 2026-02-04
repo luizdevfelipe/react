@@ -1,7 +1,9 @@
-import { createContext } from "react";
+import { createContext, useCallback, useState } from "react";
 
 interface ILoggedUserContextData {
     userName: string;
+    setName: (name: string) => void;
+    logOut: () => void;
 }
 
 interface ILoggedUserProviderProps {
@@ -11,8 +13,15 @@ interface ILoggedUserProviderProps {
 export const LoggedUserContext = createContext<ILoggedUserContextData>({} as ILoggedUserContextData);
 
 export const LoggedUserProvider: React.FC<ILoggedUserProviderProps> = ({ children }) => {
+    
+    const [name, setName] = useState("");
+
+    const handleLogOut = useCallback(() => {
+        alert("User logged out");
+    }, []);
+    
     return (
-        <LoggedUserContext.Provider value={{ userName: "Luiz" }}>
+        <LoggedUserContext.Provider value={{ userName: name, setName, logOut: handleLogOut }}>
             {children}
         </LoggedUserContext.Provider>
     );
