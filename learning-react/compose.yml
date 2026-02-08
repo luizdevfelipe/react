@@ -4,10 +4,11 @@ services:
     container_name: node-app
     volumes:
       - .:/app
-    # Aponta para o diretório da aplicação para que yarn start funcione corretamente
-    working_dir: /app/learning-react
+      - /app/node_modules
+    working_dir: /app
     ports:
       - "3000:3000"
+      - "3001:3001"
     # Mantém o container rodando para criar a aplicação React, usado com working_dir: /app/
     # command: sleep infinity
     command: yarn start
