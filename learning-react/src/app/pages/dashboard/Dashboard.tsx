@@ -2,16 +2,17 @@ import { Link } from 'react-router-dom';
 import { useLoggedUser } from '../../shared/hooks';
 import { useCallback, useState } from 'react';
 
-interface IListItem {
-    value: string;
-    isChecked: boolean;
+interface ITasks {
+    id: number;
+    title: string;
+    isCompleted: boolean;
 }
 
 
 export const Dashboard = () => {
 
     const { userName, logOut } = useLoggedUser();
-    const [list, setList] = useState<IListItem[]>([]);
+    const [list, setList] = useState<ITasks[]>([]);
 
     const handleInputKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
@@ -20,8 +21,14 @@ export const Dashboard = () => {
             const value = event.currentTarget.value.trim();
 
             setList((oldList) => {
-                if (oldList.some(item => item.value === value)) return oldList;
-                return [...oldList, { value, isChecked: false }];
+                if (oldList.some(item => item.title === value)) return oldList;
+                return [
+                    ...oldList,
+                    {
+                        id: oldList.length,
+                        title: value, 
+                        isCompleted: false
+                    }];
             });
             event.currentTarget.value = "";
         }
@@ -38,26 +45,26 @@ export const Dashboard = () => {
             <main>
 
                 <input onKeyDown={handleInputKeyDown} />
-                <p>{list.filter(item => item.isChecked).length} items selected</p>
+                <p>{list.filter(item => item.isCompleted).length} items selected</p>
 
                 <ul>
-                   {list.map((listItem) => {
-                    return <li key={listItem.value}>
-                        <input 
-                        type="checkbox"
-                        checked={listItem.isChecked}
-                        onChange={() => setList((oldList) => {
-                            return oldList.map(item => {
-                                if (item.value === listItem.value) {
-                                    return { ...item, isChecked: !item.isChecked };
-                                }
-                                return item;
-                            })
-                        })}
-                        />
-                        {listItem.value}
-                    </li>
-                   })}
+                    {list.map((listItem) => {
+                        return <li key={listItem.id}>
+                            <input
+                                type="checkbox"
+                                checked={listItem.isCompleted}
+                                onChange={() => setList((oldList) => {
+                                    return oldList.map(item => {
+                                        if (item.id === listItem.id) {
+                                            return { ...item, isCompleted: !item.isCompleted };
+                                        }
+                                        return item;
+                                    })
+                                })}
+                            />
+                            {listItem.title}
+                        </li>
+                    })}
                 </ul>
             </main >
         </>

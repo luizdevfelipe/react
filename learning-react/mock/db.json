@@ -1,12 +1,6 @@
 {
-    "posts": [
-        { "id": 1, "title": "Hello World", "author": "John Doe" },
-        { "id": 2, "title": "Learning React", "author": "Jane Smith" }
-    ],
-    "comments": [
-        { "id": 1, "postId": 1, "body": "Great post!" },
-        { "id": 2, "postId": 1, "body": "Thanks for sharing." },
-        { "id": 3, "postId": 2, "body": "Very informative." }
-    ],
-    "profile": { "name": "John Doe", "age": 30 }
+    "tasks": [
+        { "id": 1, "title": "Task 1", "isCompleted": false },
+        { "id": 2, "title": "Learning React", "isCompleted": false }
+    ]   
 }
