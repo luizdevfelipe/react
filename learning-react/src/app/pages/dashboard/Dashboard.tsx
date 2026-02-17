@@ -22,19 +22,21 @@ export const Dashboard = () => {
 
             const value = event.currentTarget.value.trim();
 
-            setList((oldList) => {
-                if (oldList.some(item => item.title === value)) return oldList;
-                return [
-                    ...oldList,
-                    {
-                        id: oldList.length,
-                        title: value,
-                        isCompleted: false
-                    }];
+            if (list.some(item => item.title === value)) return;
+
+            TasksService.create({ title: value, isCompleted: false }).then((result) => {
+                if (result instanceof ApiException) {
+                    console.error(result.message);
+                } else {
+                    console.log(result);
+                    setList((oldList) => {
+                        return [...oldList, result];
+                    });
+                }
             });
             event.currentTarget.value = "";
         }
-    }, []);
+    }, [list]);
 
     useEffect(() => {
         TasksService.getAll().then((response) => {
