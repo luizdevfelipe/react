@@ -25,7 +25,7 @@ const getById = async (id: number): Promise<ITasks | ApiException> => {
     }
 };
 
-const create = async (dataToCreate: Omit<ITasks, 'id'>): Promise<ITasks[] | ApiException> => {
+const create = async (dataToCreate: Omit<ITasks, 'id'>): Promise<ITasks | ApiException> => {
     try {
         const { data } = await Api().post<any>('/tasks', dataToCreate);
         return data;
