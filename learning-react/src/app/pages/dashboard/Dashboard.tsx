@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useLoggedUser } from '../../shared/hooks';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { TasksService } from '../../shared/services/api/tasks/TasksService';
+import { ApiException } from '../../shared/services/api/ApiException';
 
 interface ITasks {
     id: number;
@@ -26,12 +28,22 @@ export const Dashboard = () => {
                     ...oldList,
                     {
                         id: oldList.length,
-                        title: value, 
+                        title: value,
                         isCompleted: false
                     }];
             });
             event.currentTarget.value = "";
         }
+    }, []);
+
+    useEffect(() => {
+        TasksService.getAll().then((response) => {
+            if (response instanceof ApiException) {
+                console.error(response.message);
+            } else {
+                setList(response);
+            }
+        })
     }, []);
 
     return (
