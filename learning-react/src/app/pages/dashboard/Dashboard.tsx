@@ -28,7 +28,6 @@ export const Dashboard = () => {
                 if (result instanceof ApiException) {
                     console.error(result.message);
                 } else {
-                    console.log(result);
                     setList((oldList) => {
                         return [...oldList, result];
                     });
@@ -36,6 +35,30 @@ export const Dashboard = () => {
             });
             event.currentTarget.value = "";
         }
+    }, [list]);
+
+    const handleToogleComplete = useCallback((id: number) => {
+
+        const taskToUpdade = list.find((task) => task.id === id);
+
+        if (!taskToUpdade) return;
+
+        TasksService.updateById(id,
+            { ...taskToUpdade, isCompleted: !taskToUpdade.isCompleted }
+        ).then((result) => {
+            if (result instanceof ApiException) {
+                console.error(result.message);
+            } else {
+                setList((oldList) => {
+                    return oldList.map(oldListItem => {
+                        if (oldListItem.id === id) {
+                            return result;
+                        }
+                        return oldListItem;
+                    })
+                });
+            }
+        })
     }, [list]);
 
     useEffect(() => {
@@ -67,14 +90,7 @@ export const Dashboard = () => {
                             <input
                                 type="checkbox"
                                 checked={listItem.isCompleted}
-                                onChange={() => setList((oldList) => {
-                                    return oldList.map(item => {
-                                        if (item.id === listItem.id) {
-                                            return { ...item, isCompleted: !item.isCompleted };
-                                        }
-                                        return item;
-                                    })
-                                })}
+                                onChange={() => handleToogleComplete(listItem.id)}
                             />
                             {listItem.title}
                         </li>
