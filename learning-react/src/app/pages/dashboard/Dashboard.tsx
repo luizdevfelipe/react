@@ -61,6 +61,19 @@ export const Dashboard = () => {
         })
     }, [list]);
 
+    const handleDelete = useCallback((id: number) => {
+        TasksService.deleteById(id)
+        .then((result) => {
+            if (result instanceof ApiException) {
+                console.error(result.message);
+            } else {
+                setList((oldList) => {
+                    return oldList.filter(item => item.id !== id);
+                });
+            }
+        })
+    }, []);
+
     useEffect(() => {
         TasksService.getAll().then((response) => {
             if (response instanceof ApiException) {
@@ -93,6 +106,8 @@ export const Dashboard = () => {
                                 onChange={() => handleToogleComplete(listItem.id)}
                             />
                             {listItem.title}
+
+                            <button onClick={() => handleDelete(listItem.id)}>Delete</button>
                         </li>
                     })}
                 </ul>
