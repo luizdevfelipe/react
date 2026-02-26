@@ -1,0 +1,11 @@
+services:
+  node-app:
+    build: .
+    container_name: node-app-graphql
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    # Mantém o container rodando para criar a aplicação
+    command: sleep infinity
