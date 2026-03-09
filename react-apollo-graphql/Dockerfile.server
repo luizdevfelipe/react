@@ -1,0 +1,16 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copia apenas package.json primeiro (cache layer)
+COPY server/package*.json ./
+
+# Instala dependências
+RUN npm install
+
+# Copia o resto do código
+COPY server/ ./
+
+EXPOSE 4000
+
+CMD ["node", "server.js"]
