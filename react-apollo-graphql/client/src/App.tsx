@@ -14,14 +14,20 @@ const GET_USERS = gql`
 
 function App() {
 
-  const queryResult = useQuery(GET_USERS);
-  console.log(queryResult);
+  const { data, loading, error } = useQuery(GET_USERS);
 
   return (
     <>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
+
       <h1>Users</h1>
       <div>
-
+        {data?.getUsers?.map((user: any) => (
+          <div key={user.id}>
+            <p>Name: {user.name}, Married: {user.isMarried ? 'Yes' : 'No'}</p>
+          </div>
+        ))}
       </div>
     </>
   )
