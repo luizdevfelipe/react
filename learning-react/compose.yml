@@ -10,4 +10,4 @@ services:
       - "3001:3001"
     # Mantém o container rodando para criar a aplicação React, usado com working_dir: /app/
     # command: sleep infinity
-    command: ['yarn start', 'yarn mock']
+    command: sh -c "yarn mock & exec yarn start"
